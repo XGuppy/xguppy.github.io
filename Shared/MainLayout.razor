@@ -1,17 +1,38 @@
 @inherits LayoutComponentBase
-
-<div class="page">
+@inject ILocalStorageService _localStorage
+<div class="page @DarkThemeCssClass">
     <div class="sidebar">
-        <NavMenu />
+        <NavMenu/>
     </div>
 
-    <div class="main">
+    <main>
         <div class="top-row px-4">
-            <a href="http://blazor.net" target="_blank" class="ml-md-auto">About</a>
+            <div class="form-check form-switch">
+                <input @onclick="ToggleTheme" class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" @bind="_darkTheme">
+                <label class="form-check-label" for="flexSwitchCheckDefault" aria-hidden="true">Тёмная тема</label>
+            </div>
         </div>
 
-        <div class="content px-4">
+        <article class="content px-4">
             @Body
-        </div>
-    </div>
+        </article>
+    </main>
 </div>
+
+@code {
+    private const string ThemeLocalStorageKey = "theme";
+    private bool _darkTheme;
+    private string? DarkThemeCssClass => _darkTheme ? "dark-theme" : null;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _darkTheme = await _localStorage.GetItemAsync<bool>(ThemeLocalStorageKey);
+    }
+
+    private void ToggleTheme()
+    {
+        _darkTheme = !_darkTheme;
+        _localStorage.SetItemAsync(ThemeLocalStorageKey, _darkTheme);
+    }
+
+}
