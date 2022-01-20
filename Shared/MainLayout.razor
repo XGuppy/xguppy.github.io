@@ -29,10 +29,10 @@
         _darkTheme = await _localStorage.GetItemAsync<bool>(ThemeLocalStorageKey);
     }
 
-    private void ToggleTheme()
+    private async void ToggleTheme()
     {
         _darkTheme = !_darkTheme;
-        _localStorage.SetItemAsync(ThemeLocalStorageKey, _darkTheme);
+        await _localStorage.SetItemAsync(ThemeLocalStorageKey, _darkTheme);
     }
 
 }
