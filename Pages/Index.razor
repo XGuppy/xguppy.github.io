@@ -1,7 +1,52 @@
 ﻿@page "/"
+@using System.Globalization
 
-<h1>Hello, world!</h1>
+<PageTitle>Guppy's Hideout</PageTitle>
 
-Welcome to your new app.
+<div class="container">
+    <div class="row">
+        <div class="col-sm">
+            <h1>Привет мир!</h1>
+            <p>
+                Привет, меня зовут Игорь Мурзаев мне @_myAge @(_myAge % 10 is > 0 and < 5 ? "года" : "лет").
+                Я являюсь .NET разработчиком, разрабатываю веб-системы, API, десктопные и мобильные приложения и пр.
+            </p>
+            <p>
+                В рамках рабочей деятельности пишу веб-системы, разрабатываю (поддерживаю) приложения под ОС Android на
+                Java. Пишу некоторый низкоуровневый код для своих пет-проектов.
+            </p>
+            <p>Кроме увлечения разрабатывать программное обеспечение, я очень люблю его изучать и коллекционировать. Многие программы, представляют собой историческую и духовную ценность для меня.</p>
+            <p>
+                Изучаю историю вычислительной техники и архитектуры ВМ, операционные системы.
+                В данный момент работаю в ГК Adeptik <a href="https://adeptik.com/snaryad-fsm/">СНАРЯД | FSM</a> на должности "Разработчик". Постоянно занят изучением всё новых и новых технологии.
+            </p>
+            <p>
+                Кроме увлечения связанными с ВТ, увлекаюсь чтением, стрелковым оружием, компьютерными играми и музыкой.
+                На данных страницах буду размещать свои мысли в категории "Блог" и различные приложения, которые возможно разместить в рамках SPA.
+            </p>
+            <p>Если Вы по какой-то причине захотели связаться со мной, зайдите во вкладку "Контакты"</p>
+        </div>
+        <div class="col-sm">
+            <img height="640" width="360" class="rounded img-fluid" src="common/images/myPhoto.JPG" alt="Тут должно быть моё фото"/>
+        </div>
+    </div>
+</div>
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+
+@code
+{
+    private readonly int _myAge = CalculateAge(DateTime.Parse("01/13/1997", CultureInfo.InvariantCulture));
+
+    private static int CalculateAge(DateTime birthday)
+    {
+        var now = DateTime.Now;
+        var age = DateTime.Now.Year - birthday.Year;
+
+        if (birthday.Date > now.AddYears(-age))
+        {
+            --age;
+        }
+
+        return age;
+    }
+}
